@@ -50,13 +50,22 @@ let gs = {
 	},
 
 	player1: {
-		pos: 0,
-		score: 0
+		score: 0,
+		pos: 150, // SHOULD BE A PERCENTAGE BETWEEN 0 AND 100
+		drawPaddle: function(){
+			ctx.fillStyle = "white";
+			//REPLACE gs.player1.pos with percentage!!!
+			ctx.fillRect(gs.screen.padding, gs.screen.padding + gs.player1.pos, gs.paddle.width, gs.paddle.height);
+		}
 	},
 
 	player2: {
-		pos: 0,
-		score: 0
+		score: 0,
+		pos: 50,
+		drawPaddle: function(){
+			ctx.fillStyle = "white";
+			ctx.fillRect(gs.screen.width - gs.screen.padding - gs.paddle.width, gs.screen.padding + gs.player2.pos, gs.paddle.width, gs.paddle.height);
+		}
 	}
 
 };
@@ -64,14 +73,31 @@ let gs = {
 const canvas = document.getElementById("pongBoard");
 let ctx = canvas.getContext("2d");
 
-ctx.fillStyle = "black";
-ctx.fillRect(0, 0, gs.screen.width, gs.screen.height);
+clearScreen();
 
 //display temp paddles
-//draw player1 paddle
-ctx.fillStyle = "white";
-ctx.fillRect(gs.screen.padding, gs.screen.padding + gs.player1.pos, gs.paddle.width, gs.paddle.height);
+gs.player1.drawPaddle();
+gs.player2.drawPaddle();
 
-//draw player2 paddle
-ctx.fillStyle = "white";
-ctx.fillRect(gs.screen.width - gs.screen.padding - gs.paddle.width, gs.screen.padding + gs.player1.pos, gs.paddle.width, gs.paddle.height);
+/**********************
+ * FUNCTIONS
+ *********************/
+
+function clearScreen(){
+	ctx.fillStyle = "black";
+	ctx.fillRect(0, 0, gs.screen.width, gs.screen.height);
+}
+
+/*
+let lastTime = null;
+function playAnimation(time){
+	if (lastTime != null){
+		let delta = time - lastTime;
+
+	}
+	lastTime = time;
+	window.requestAnimationFrame(playAnimation);
+}
+
+window.requestAnimationFrame(playAnimation);
+*/
