@@ -67,3 +67,11 @@ let ctx = canvas.getContext("2d");
 ctx.fillStyle = "black";
 ctx.fillRect(0, 0, gs.screen.width, gs.screen.height);
 
+//display temp paddles
+//draw player1 paddle
+ctx.fillStyle = "white";
+ctx.fillRect(gs.screen.padding, gs.screen.padding + gs.player1.pos, gs.paddle.width, gs.paddle.height);
+
+//draw player2 paddle
+ctx.fillStyle = "white";
+ctx.fillRect(gs.screen.width - gs.screen.padding - gs.paddle.width, gs.screen.padding + gs.player1.pos, gs.paddle.width, gs.paddle.height);
