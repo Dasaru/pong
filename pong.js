@@ -26,12 +26,6 @@ const keyCodes = {
 }
 */
 
-const canvas = document.getElementById("pongBoard");
-let ctx = canvas.getContext("2d");
-
-ctx.fillStyle = "black";
-ctx.fillRect(0, 0, 500, 400);
-
 let gs = {
 
 	gamePaused: true,
@@ -66,3 +60,10 @@ let gs = {
 	}
 
 };
+
+const canvas = document.getElementById("pongBoard");
+let ctx = canvas.getContext("2d");
+
+ctx.fillStyle = "black";
+ctx.fillRect(0, 0, gs.screen.width, gs.screen.height);
+
