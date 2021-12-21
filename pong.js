@@ -31,7 +31,7 @@ let gs = {
 	gamePaused: true,
 
 	screen: {
-		padding: 60,
+		padding: 30,
 		width: 500,
 		height: 400
 	},
@@ -51,20 +51,21 @@ let gs = {
 
 	player1: {
 		score: 0,
-		pos: 150, // SHOULD BE A PERCENTAGE BETWEEN 0 AND 100
+		pos: 50, // Percentage between 0 and 100
 		drawPaddle: function(){
 			ctx.fillStyle = "white";
-			//REPLACE gs.player1.pos with percentage!!!
-			ctx.fillRect(gs.screen.padding, gs.screen.padding + gs.player1.pos, gs.paddle.width, gs.paddle.height);
+			let offset = gs.screen.padding + gs.player1.pos*(gs.screen.height - gs.screen.padding*2 - gs.paddle.height)/100;
+			ctx.fillRect(gs.screen.padding, offset, gs.paddle.width, gs.paddle.height);
 		}
 	},
 
 	player2: {
 		score: 0,
-		pos: 50,
+		pos: 50, // Percentage between 0 and 100
 		drawPaddle: function(){
 			ctx.fillStyle = "white";
-			ctx.fillRect(gs.screen.width - gs.screen.padding - gs.paddle.width, gs.screen.padding + gs.player2.pos, gs.paddle.width, gs.paddle.height);
+			let offset = gs.screen.padding + gs.player2.pos*(gs.screen.height - gs.screen.padding*2 - gs.paddle.height)/100;
+			ctx.fillRect(gs.screen.width - gs.screen.padding - gs.paddle.width, offset, gs.paddle.width, gs.paddle.height);
 		}
 	}
 
