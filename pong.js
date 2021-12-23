@@ -1,12 +1,4 @@
 
-//Maybe use?
-/*
-window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
-                              window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-*/
-
-// Need global game object to contain state.
-
 /*
 
 FEATURES:
