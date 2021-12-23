@@ -42,6 +42,10 @@ let gs = {
 			let offset = gs.screen.padding + gs.player1.pos*(gs.screen.height - gs.screen.padding*2 - gs.paddle.height)/100;
 			ctx.fillRect(gs.screen.padding, offset, gs.paddle.width, gs.paddle.height);
 		},
+		keyCode: {
+			up: "KeyA",
+			down: "KeyZ"
+		},
 		keyPressed: {
 			up: false,
 			down: false
@@ -56,6 +60,10 @@ let gs = {
 			let offset = gs.screen.padding + gs.player2.pos*(gs.screen.height - gs.screen.padding*2 - gs.paddle.height)/100;
 			ctx.fillRect(gs.screen.width - gs.screen.padding - gs.paddle.width, offset, gs.paddle.width, gs.paddle.height);
 		},
+		keyCode: {
+			up: "ArrowUp",
+			down: "ArrowDown"
+		},
 		keyPressed: {
 			up: false,
 			down: false
@@ -65,20 +73,36 @@ let gs = {
 };
 
 addEventListener("keydown", (e) => {
-	if (e.code === "ArrowDown"){
+	//Player 1
+	if (e.code === gs.player1.keyCode.up){
+		gs.player1.keyPressed.up = true;
+	}
+	if (e.code === gs.player1.keyCode.down){
 		gs.player1.keyPressed.down = true;
 	}
-	if (e.code === "ArrowUp"){
-		gs.player1.keyPressed.up = true;
+	//Player 2
+	if (e.code === gs.player2.keyCode.up){
+		gs.player2.keyPressed.up = true;
+	}
+	if (e.code === gs.player2.keyCode.down){
+		gs.player2.keyPressed.down = true;
 	}
 });
 
 addEventListener("keyup", (e) => {
-	if (e.code === "ArrowDown"){
+	//Player 1
+	if (e.code === gs.player1.keyCode.up){
+		gs.player1.keyPressed.up = false;
+	}
+	if (e.code === gs.player1.keyCode.down){
 		gs.player1.keyPressed.down = false;
 	}
-	if (e.code === "ArrowUp"){
-		gs.player1.keyPressed.up = false;
+	//Player 2
+	if (e.code === gs.player2.keyCode.up){
+		gs.player2.keyPressed.up = false;
+	}
+	if (e.code === gs.player2.keyCode.down){
+		gs.player2.keyPressed.down = false;
 	}
 });
 
@@ -102,24 +126,28 @@ function drawPaddles(){
 	gs.player2.drawPaddle();
 }
 
+function movePlayer(player, delta){
+	if (player.keyPressed.down && !player.keyPressed.up){
+		player.pos = player.pos + (delta/gs.paddle.speed);
+	}
+	if (!player.keyPressed.down && player.keyPressed.up) {
+		player.pos = player.pos - (delta/gs.paddle.speed);
+	}
+	if (player.pos < 0 ){
+		player.pos = 0;
+	}
+	if (player.pos > 100){
+		player.pos = 100;
+	}
+}
+
 let lastTime = null;
 function playAnimation(time){
 	if (lastTime != null){
 		let delta = time - lastTime;
-		
-		// Move player1
-		if (gs.player1.keyPressed.down && !gs.player1.keyPressed.up){
-			gs.player1.pos = gs.player1.pos + (delta/gs.paddle.speed);
-		}
-		if (!gs.player1.keyPressed.down && gs.player1.keyPressed.up) {
-			gs.player1.pos = gs.player1.pos - (delta/gs.paddle.speed);
-		}
-		if (gs.player1.pos < 0 ){
-			gs.player1.pos = 0;
-		}
-		if (gs.player1.pos > 100){
-			gs.player1.pos = 100;
-		}
+
+		movePlayer(gs.player1, delta);
+		movePlayer(gs.player2, delta);
 
 		clearScreen();
 		drawPaddles();
