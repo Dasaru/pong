@@ -18,14 +18,6 @@ FEATURES:
 
 */
 
-/*
-const keyCodes = {
-	13: "enter",
-	38: "down",
-	40: "up"
-}
-*/
-
 let gs = {
 
 	gamePaused: true,
@@ -47,6 +39,7 @@ let gs = {
 	paddle: {
 		width: 10,
 		height: 80,
+		speed: 3 // # of milliseconds to move 1%
 	},
 
 	player1: {
@@ -56,6 +49,10 @@ let gs = {
 			ctx.fillStyle = "white";
 			let offset = gs.screen.padding + gs.player1.pos*(gs.screen.height - gs.screen.padding*2 - gs.paddle.height)/100;
 			ctx.fillRect(gs.screen.padding, offset, gs.paddle.width, gs.paddle.height);
+		},
+		keyPressed: {
+			up: false,
+			down: false
 		}
 	},
 
@@ -66,19 +63,38 @@ let gs = {
 			ctx.fillStyle = "white";
 			let offset = gs.screen.padding + gs.player2.pos*(gs.screen.height - gs.screen.padding*2 - gs.paddle.height)/100;
 			ctx.fillRect(gs.screen.width - gs.screen.padding - gs.paddle.width, offset, gs.paddle.width, gs.paddle.height);
+		},
+		keyPressed: {
+			up: false,
+			down: false
 		}
 	}
 
 };
 
+addEventListener("keydown", (e) => {
+	if (e.code === "ArrowDown"){
+		gs.player1.keyPressed.down = true;
+	}
+	if (e.code === "ArrowUp"){
+		gs.player1.keyPressed.up = true;
+	}
+});
+
+addEventListener("keyup", (e) => {
+	if (e.code === "ArrowDown"){
+		gs.player1.keyPressed.down = false;
+	}
+	if (e.code === "ArrowUp"){
+		gs.player1.keyPressed.up = false;
+	}
+});
+
 const canvas = document.getElementById("pongBoard");
 let ctx = canvas.getContext("2d");
 
 clearScreen();
-
-//display temp paddles
-gs.player1.drawPaddle();
-gs.player2.drawPaddle();
+drawPaddles();
 
 /**********************
  * FUNCTIONS
@@ -89,16 +105,35 @@ function clearScreen(){
 	ctx.fillRect(0, 0, gs.screen.width, gs.screen.height);
 }
 
-/*
+function drawPaddles(){
+	gs.player1.drawPaddle();
+	gs.player2.drawPaddle();
+}
+
 let lastTime = null;
 function playAnimation(time){
 	if (lastTime != null){
 		let delta = time - lastTime;
+		
+		// Move player1
+		if (gs.player1.keyPressed.down && !gs.player1.keyPressed.up){
+			gs.player1.pos = gs.player1.pos + (delta/gs.paddle.speed);
+		}
+		if (!gs.player1.keyPressed.down && gs.player1.keyPressed.up) {
+			gs.player1.pos = gs.player1.pos - (delta/gs.paddle.speed);
+		}
+		if (gs.player1.pos < 0 ){
+			gs.player1.pos = 0;
+		}
+		if (gs.player1.pos > 100){
+			gs.player1.pos = 100;
+		}
 
+		clearScreen();
+		drawPaddles();
 	}
 	lastTime = time;
 	window.requestAnimationFrame(playAnimation);
 }
 
 window.requestAnimationFrame(playAnimation);
-*/
