@@ -1,15 +1,4 @@
 
-/*
-
-FEATURES:
-	- Ability to reset game.
-	- Computer opponent moves second paddle. (simple AI)
-	- Ball slowly speeds up after each bounce.
-	- Ball trajectory changed based on where it hits paddle.
-	- Hitbox detection.
-
-*/
-
 let gs = {
 
 	gamePaused: true,
