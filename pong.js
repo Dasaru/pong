@@ -116,6 +116,8 @@ window.requestAnimationFrame(playAnimation);
 
 		clearScreen();
 		drawPaddles();
+
+		drawBorders();
 	}
 	gs.lastTickTime = time;
 	window.requestAnimationFrame(playAnimation);
@@ -129,6 +131,13 @@ function clearScreen(){
 function drawPaddles(){
 	gs.player1.drawPaddle();
 	gs.player2.drawPaddle();
+}
+
+function drawBorders(){
+	const borderThickness = 3;
+	ctx.fillStyle = "#444";
+	ctx.fillRect(0, gs.screen.padding - borderThickness, gs.screen.width, borderThickness);
+	ctx.fillRect(0, gs.screen.height - gs.screen.padding, gs.screen.width, borderThickness);
 }
 
 function movePlayer(player, delta){
