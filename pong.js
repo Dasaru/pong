@@ -13,6 +13,7 @@ FEATURES:
 let gs = {
 
 	gamePaused: true,
+	lastTickTime: null,
 
 	screen: {
 		padding: 30,
@@ -111,10 +112,25 @@ let ctx = canvas.getContext("2d");
 
 clearScreen();
 drawPaddles();
+window.requestAnimationFrame(playAnimation);
 
 /**********************
  * FUNCTIONS
  *********************/
+
+ function playAnimation(time){
+	if (gs.lastTickTime != null){
+		let delta = time - gs.lastTickTime;
+
+		movePlayer(gs.player1, delta);
+		movePlayer(gs.player2, delta);
+
+		clearScreen();
+		drawPaddles();
+	}
+	gs.lastTickTime = time;
+	window.requestAnimationFrame(playAnimation);
+}
 
 function clearScreen(){
 	ctx.fillStyle = "black";
@@ -140,20 +156,3 @@ function movePlayer(player, delta){
 		player.pos = 100;
 	}
 }
-
-let lastTime = null;
-function playAnimation(time){
-	if (lastTime != null){
-		let delta = time - lastTime;
-
-		movePlayer(gs.player1, delta);
-		movePlayer(gs.player2, delta);
-
-		clearScreen();
-		drawPaddles();
-	}
-	lastTime = time;
-	window.requestAnimationFrame(playAnimation);
-}
-
-window.requestAnimationFrame(playAnimation);
