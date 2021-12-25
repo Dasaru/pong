@@ -143,8 +143,9 @@ function drawBorders(){
 
 function drawScoreboard(){
 	ctx.fillStyle = "#888";
+	ctx.textAlign = 'center';
 	ctx.font = "24px Arial";
-	ctx.fillText("0 - 0", gs.screen.width/2-17, gs.screen.padding - 7);
+	ctx.fillText(gs.player1.score + " - " + gs.player2.score, gs.screen.width/2, gs.screen.padding - 7);
 }
 
 function movePlayer(player, delta){
