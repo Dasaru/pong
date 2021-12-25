@@ -118,6 +118,7 @@ window.requestAnimationFrame(playAnimation);
 		drawPaddles();
 
 		drawBorders();
+		drawScoreboard();
 	}
 	gs.lastTickTime = time;
 	window.requestAnimationFrame(playAnimation);
@@ -138,6 +139,12 @@ function drawBorders(){
 	ctx.fillStyle = "#444";
 	ctx.fillRect(0, gs.screen.padding - borderThickness, gs.screen.width, borderThickness);
 	ctx.fillRect(0, gs.screen.height - gs.screen.padding, gs.screen.width, borderThickness);
+}
+
+function drawScoreboard(){
+	ctx.fillStyle = "#888";
+	ctx.font = "24px Arial";
+	ctx.fillText("0 - 0", gs.screen.width/2-17, gs.screen.padding - 7);
 }
 
 function movePlayer(player, delta){
