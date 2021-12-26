@@ -11,11 +11,11 @@ let gs = {
 	},
 
 	ball: {
-		width: 10,
-		dirX: 0,
-		dirY: 0,
+		size: 10,
 		coordX: 0,
-		coordY: 0
+		coordY: 0,
+		velX: 0,
+		velY: 0
 	},
 
 	paddle: {
@@ -101,6 +101,7 @@ let ctx = canvas.getContext("2d");
 
 clearScreen();
 drawPaddles();
+resetBall();
 window.requestAnimationFrame(playAnimation);
 
 /**********************
@@ -116,6 +117,7 @@ window.requestAnimationFrame(playAnimation);
 
 		clearScreen();
 		drawPaddles();
+		drawBall();
 
 		drawBorders();
 		drawScoreboard();
@@ -132,6 +134,16 @@ function clearScreen(){
 function drawPaddles(){
 	gs.player1.drawPaddle();
 	gs.player2.drawPaddle();
+}
+
+function resetBall(){
+	gs.ball.coordX = Math.floor(gs.screen.width/2 - gs.ball.size/2);
+	gs.ball.coordY = Math.floor(gs.screen.height/2 - gs.ball.size/2);
+}
+
+function drawBall(){
+	ctx.fillStyle = "white";
+	ctx.fillRect(gs.ball.coordX, gs.ball.coordY, gs.ball.size, gs.ball.size);
 }
 
 function drawBorders(){
