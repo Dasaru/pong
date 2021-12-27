@@ -96,6 +96,16 @@ addEventListener("keyup", (e) => {
 	}
 });
 
+addEventListener("keypress", (e) => {
+	if (e.code === "Enter") {
+		if (gs.gamePaused){
+			startGame();
+		} else {
+			pauseGame();
+		}
+	}
+});
+
 const canvas = document.getElementById("pongBoard");
 let ctx = canvas.getContext("2d");
 
@@ -158,6 +168,16 @@ function drawScoreboard(){
 	ctx.textAlign = 'center';
 	ctx.font = "24px Arial";
 	ctx.fillText(gs.player1.score + " - " + gs.player2.score, gs.screen.width/2, gs.screen.padding - 7);
+}
+
+function startGame(){
+	gs.gamePaused = false;
+	console.log("Pressed start! " + Math.random());
+}
+
+function pauseGame(){
+	gs.gamePaused = true;
+	console.log("Pressed pause! " + Math.random());
 }
 
 function movePlayer(player, delta){
