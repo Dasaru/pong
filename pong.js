@@ -14,8 +14,10 @@ let gs = {
 		size: 10,
 		coordX: 0,
 		coordY: 0,
-		velX: 0,
-		velY: 0
+		velX: 0.8, // (-1 to 1) ratio: 1 = rate of 1% per 10 milliseconds
+		velY: -0.8,
+		minSpeed: 0.8,
+		maxSpeed: 5
 	},
 
 	paddle: {
@@ -124,6 +126,7 @@ window.requestAnimationFrame(playAnimation);
 
 		movePlayer(gs.player1, delta);
 		movePlayer(gs.player2, delta);
+		moveBall(delta);
 
 		clearScreen();
 		drawPaddles();
@@ -176,12 +179,10 @@ function drawScoreboard(){
 
 function startGame(){
 	gs.gamePaused = false;
-	console.log("Pressed start! " + Math.random());
 }
 
 function pauseGame(){
 	gs.gamePaused = true;
-	console.log("Pressed pause! " + Math.random());
 }
 
 function displayPauseMessage(){
@@ -204,4 +205,10 @@ function movePlayer(player, delta){
 	if (player.pos > 100){
 		player.pos = 100;
 	}
+}
+
+function moveBall(delta){
+	if (gs.gamePaused) return;
+	gs.ball.coordX = gs.ball.coordX + (delta/10)*gs.ball.velX;
+	gs.ball.coordY = gs.ball.coordY + (delta/10)*gs.ball.velY;
 }
