@@ -131,6 +131,10 @@ window.requestAnimationFrame(playAnimation);
 
 		drawBorders();
 		drawScoreboard();
+
+		if (gs.gamePaused){
+			displayPauseMessage();
+		}
 	}
 	gs.lastTickTime = time;
 	window.requestAnimationFrame(playAnimation);
@@ -178,6 +182,13 @@ function startGame(){
 function pauseGame(){
 	gs.gamePaused = true;
 	console.log("Pressed pause! " + Math.random());
+}
+
+function displayPauseMessage(){
+	ctx.fillStyle = "#aaa"
+	ctx.textAlign = "center";
+	ctx.font = "24px Arial";
+	ctx.fillText("Paused", gs.screen.width/2, gs.screen.height*0.4);
 }
 
 function movePlayer(player, delta){
