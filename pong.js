@@ -209,6 +209,32 @@ function movePlayer(player, delta){
 
 function moveBall(delta){
 	if (gs.gamePaused) return;
+	const bound = {
+		left: gs.screen.padding + gs.paddle.width,
+		right: gs.screen.width - gs.screen.padding - gs.paddle.width - gs.ball.size,
+		top: gs.screen.padding,
+		bottom: gs.screen.height - gs.screen.padding - gs.ball.size
+	}
 	gs.ball.coordX = gs.ball.coordX + (delta/10)*gs.ball.velX;
+	// left side hitbox
+	if (gs.ball.coordX < bound.left) {
+		gs.ball.coordX = bound.left;
+		gs.ball.velX = -gs.ball.velX;
+	}
+	// right side hitbox
+	if (gs.ball.coordX > bound.right) {
+		gs.ball.coordX = bound.right;
+		gs.ball.velX = -gs.ball.velX;
+	}
 	gs.ball.coordY = gs.ball.coordY + (delta/10)*gs.ball.velY;
+	// top side hitbox
+	if (gs.ball.coordY < bound.top) {
+		gs.ball.coordY = bound.top;
+		gs.ball.velY = -gs.ball.velY;
+	}
+	// bottom side hitbox
+	if (gs.ball.coordY > bound.bottom) {
+		gs.ball.coordY = bound.bottom;
+		gs.ball.velY = -gs.ball.velY;
+	}
 }
