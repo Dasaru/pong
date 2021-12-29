@@ -158,6 +158,11 @@ function resetBall(){
 	gs.ball.coordY = Math.floor(gs.screen.height/2 - gs.ball.size/2);
 }
 
+function resetPaddles(){
+	gs.player1.pos = 50;
+	gs.player2.pos = 50;
+}
+
 function drawBall(){
 	ctx.fillStyle = "white";
 	ctx.fillRect(gs.ball.coordX, gs.ball.coordY, gs.ball.size, gs.ball.size);
@@ -183,6 +188,12 @@ function startGame(){
 
 function pauseGame(){
 	gs.gamePaused = true;
+}
+
+function resetGame(){
+	gs.gamePaused = true;
+	resetBall();
+	resetPaddles();
 }
 
 function displayPauseMessage(){
