@@ -222,6 +222,17 @@ function movePlayer(player, delta){
 	}
 }
 
+function playerScore(player){
+	pauseGame();
+	player.score++;
+}
+
+function paddleHit(player){
+	let offset = getOffset(player.pos);
+	//TODO: Change ball velocity.
+	return (gs.ball.coordY + gs.ball.size) >= offset && gs.ball.coordY <= (offset + gs.paddle.height);
+}
+
 function moveBall(delta){
 	if (gs.gamePaused) return;
 	const bound = {
@@ -233,13 +244,21 @@ function moveBall(delta){
 	gs.ball.coordX = gs.ball.coordX + (delta/10)*gs.ball.velX;
 	// left side hitbox
 	if (gs.ball.coordX < bound.left) {
-		gs.ball.coordX = bound.left;
-		gs.ball.velX = -gs.ball.velX;
+		if (paddleHit(gs.player1)){
+			gs.ball.coordX = bound.left;
+			gs.ball.velX = -gs.ball.velX;
+		} else {
+			playerScore(gs.player2);
+		}
 	}
 	// right side hitbox
 	if (gs.ball.coordX > bound.right) {
-		gs.ball.coordX = bound.right;
-		gs.ball.velX = -gs.ball.velX;
+		if (paddleHit(gs.player2)){
+			gs.ball.coordX = bound.right;
+			gs.ball.velX = -gs.ball.velX;
+		} else {
+			playerScore(gs.player1);
+		}
 	}
 	gs.ball.coordY = gs.ball.coordY + (delta/10)*gs.ball.velY;
 	// top side hitbox
