@@ -31,7 +31,7 @@ let gs = {
 		pos: 50, // Percentage between 0 and 100
 		drawPaddle: function(){
 			ctx.fillStyle = "white";
-			let offset = gs.screen.padding + gs.player1.pos*(gs.screen.height - gs.screen.padding*2 - gs.paddle.height)/100;
+			let offset = getOffset(gs.player1.pos);
 			ctx.fillRect(gs.screen.padding, offset, gs.paddle.width, gs.paddle.height);
 		},
 		keyCode: {
@@ -49,7 +49,7 @@ let gs = {
 		pos: 50, // Percentage between 0 and 100
 		drawPaddle: function(){
 			ctx.fillStyle = "white";
-			let offset = gs.screen.padding + gs.player2.pos*(gs.screen.height - gs.screen.padding*2 - gs.paddle.height)/100;
+			let offset = getOffset(gs.player2.pos);
 			ctx.fillRect(gs.screen.width - gs.screen.padding - gs.paddle.width, offset, gs.paddle.width, gs.paddle.height);
 		},
 		keyCode: {
@@ -180,6 +180,10 @@ function drawScoreboard(){
 	ctx.textAlign = 'center';
 	ctx.font = "24px Arial";
 	ctx.fillText(gs.player1.score + " - " + gs.player2.score, gs.screen.width/2, gs.screen.padding - 7);
+}
+
+function getOffset(playerPos){
+	return gs.screen.padding + playerPos*(gs.screen.height - gs.screen.padding*2 - gs.paddle.height)/100;
 }
 
 function startGame(){
