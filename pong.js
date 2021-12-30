@@ -124,8 +124,8 @@ window.requestAnimationFrame(playAnimation);
 	if (gs.lastTickTime != null){
 		let delta = time - gs.lastTickTime;
 
-		movePlayer(gs.player1, delta);
-		movePlayer(gs.player2, delta);
+		movePaddle(gs.player1, delta);
+		movePaddle(gs.player2, delta);
 		moveBall(delta);
 
 		clearScreen();
@@ -207,7 +207,7 @@ function displayPauseMessage(){
 	ctx.fillText("Paused", gs.screen.width/2, gs.screen.height*0.4);
 }
 
-function movePlayer(player, delta){
+function movePaddle(player, delta){
 	if (player.keyPressed.down && !player.keyPressed.up){
 		player.pos = player.pos + (delta/gs.paddle.speed);
 	}
