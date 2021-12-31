@@ -14,10 +14,12 @@ let gs = {
 		size: 10,
 		coordX: 0,
 		coordY: 0,
-		velX: 0.8, // (-1 to 1) ratio: 1 = rate of 1% per 10 milliseconds
-		velY: -0.8,
-		minSpeed: 0.8,
-		maxSpeed: 5
+		velX: 0, // (-1 to 1) ratio: 1 = rate of 1% per 10 milliseconds
+		velY: 0,
+		minXSpeed: 1.2,
+		maxXSpeed: 5,
+		minYSpeed: 0.6,
+		maxYSpeed: 5
 	},
 
 	paddle: {
@@ -156,16 +158,28 @@ function drawPaddles(){
 function resetBall(){
 	gs.ball.coordX = Math.floor(gs.screen.width/2 - gs.ball.size/2);
 	gs.ball.coordY = Math.floor(gs.screen.height/2 - gs.ball.size/2);
-	//TODO: Randomize ball direction.
-	gs.ball.velX = gs.ball.minSpeed;
+	resetBallSpeed();
+	randomizeBallDirection();
+}
+
+function resetBallSpeed(){
+	gs.ball.velX = gs.ball.minXSpeed;
+	gs.ball.velY = gs.ball.minYSpeed;
+}
+
+function randomizeBallDirection(){
+	let direction = (Math.floor(Math.random()*2)) ? 1 : -1;
+	gs.ball.velX = direction * gs.ball.minXSpeed;
+	direction = (Math.floor(Math.random()*2)) ? 1 : -1;
+	gs.ball.velY = direction * gs.ball.minYSpeed;
 }
 
 function speedUpBall(){
 	const absX = Math.abs(gs.ball.velX);
 	const sign = (gs.ball.velX > 0) ? 1 : -1;
-	if (absX === gs.ball.minSpeed){
+	if (absX === gs.ball.minXSpeed){
 		gs.ball.velX = sign * 1.8;
-	} else if (absX < gs.ball.maxSpeed){
+	} else if (absX < gs.ball.maxXSpeed){
 		gs.ball.velX = sign * (absX + 0.4);
 	}
 	//TODO: Change velY direction based on paddle movement and collision.
