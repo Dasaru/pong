@@ -22,7 +22,7 @@ let gs = {
 
 	paddle: {
 		width: 10,
-		height: 80,
+		height: 81,
 		speed: 3 // # of milliseconds to move 1%
 	},
 
@@ -156,6 +156,19 @@ function drawPaddles(){
 function resetBall(){
 	gs.ball.coordX = Math.floor(gs.screen.width/2 - gs.ball.size/2);
 	gs.ball.coordY = Math.floor(gs.screen.height/2 - gs.ball.size/2);
+	//TODO: Randomize ball direction.
+	gs.ball.velX = gs.ball.minSpeed;
+}
+
+function speedUpBall(){
+	const absX = Math.abs(gs.ball.velX);
+	const sign = (gs.ball.velX > 0) ? 1 : -1;
+	if (absX === gs.ball.minSpeed){
+		gs.ball.velX = sign * 1.8;
+	} else if (absX < gs.ball.maxSpeed){
+		gs.ball.velX = sign * (absX + 0.4);
+	}
+	//TODO: Change velY direction based on paddle movement and collision.
 }
 
 function resetPaddles(){
@@ -223,13 +236,14 @@ function movePaddle(player, delta){
 }
 
 function playerScore(player){
+	resetBall();
 	pauseGame();
 	player.score++;
 }
 
 function paddleHit(player){
 	let offset = getOffset(player.pos);
-	//TODO: Change ball velocity.
+	speedUpBall();
 	return (gs.ball.coordY + gs.ball.size) >= offset && gs.ball.coordY <= (offset + gs.paddle.height);
 }
 
