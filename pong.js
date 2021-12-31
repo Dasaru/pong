@@ -126,9 +126,11 @@ window.requestAnimationFrame(playAnimation);
 	if (gs.lastTickTime != null){
 		let delta = time - gs.lastTickTime;
 
-		movePaddle(gs.player1, delta);
-		movePaddle(gs.player2, delta);
-		moveBall(delta);
+		if (!gs.gamePaused){
+			movePaddle(gs.player1, delta);
+			movePaddle(gs.player2, delta);
+			moveBall(delta);
+		}
 
 		clearScreen();
 		drawPaddles();
@@ -251,6 +253,7 @@ function movePaddle(player, delta){
 
 function playerScore(player){
 	resetBall();
+	resetPaddles();
 	pauseGame();
 	player.score++;
 }
@@ -262,7 +265,6 @@ function paddleHit(player){
 }
 
 function moveBall(delta){
-	if (gs.gamePaused) return;
 	const bound = {
 		left: gs.screen.padding + gs.paddle.width,
 		right: gs.screen.width - gs.screen.padding - gs.paddle.width - gs.ball.size,
