@@ -25,7 +25,7 @@ let gs = {
 	paddle: {
 		width: 10,
 		height: 81,
-		speed: 3 // # of milliseconds to move 1%
+		speed: 8 // # of milliseconds to move 1%
 	},
 
 	player1: {
@@ -176,15 +176,42 @@ function randomizeBallDirection(){
 	gs.ball.velY = direction * gs.ball.minYSpeed;
 }
 
-function speedUpBall(){
+function speedUpBall(playerHit){
+	// Increase ball.velX speed
 	const absX = Math.abs(gs.ball.velX);
-	const sign = (gs.ball.velX > 0) ? 1 : -1;
+	const signX = (gs.ball.velX > 0) ? 1 : -1;
 	if (absX === gs.ball.minXSpeed){
-		gs.ball.velX = sign * 1.8;
+		gs.ball.velX = signX * 1.8;
 	} else if (absX < gs.ball.maxXSpeed){
-		gs.ball.velX = sign * (absX + 0.4);
+		gs.ball.velX = signX * (absX + 0.4);
 	}
-	//TODO: Change velY direction based on paddle movement and collision.
+
+	// Change velY direction based on paddle movement and collision.
+	const absY = Math.abs(gs.ball.velY);
+	const ballCenter = Math.floor(gs.ball.size / 2);
+	const third = Math.floor(gs.paddle.height / 3);
+	const topThird = getOffset(playerHit.pos) + third - ballCenter;
+	const botThird = getOffset(playerHit.pos) + 2*third - ballCenter;
+
+	// Change velY based on paddle hitbox.
+	if (gs.ball.coordY < topThird){
+		//top hit
+		if (absY < gs.ball.maxYSpeed){
+			gs.ball.velY -= 0.6;
+		}
+	} else if (gs.ball.coordY > botThird) {
+		//bottom hit
+		if (absY < gs.ball.maxYSpeed){
+			gs.ball.velY += 0.6;
+		}
+	}
+
+	// Change velY based on paddle movement
+	if (playerHit.keyPressed.up && absY < gs.ball.maxYSpeed){
+		gs.ball.velY -= 0.6;
+	} else if (playerHit.keyPressed.down && absY < gs.ball.maxYSpeed) {
+		gs.ball.velY += 0.6;
+	}
 }
 
 function resetPaddles(){
@@ -260,7 +287,7 @@ function playerScore(player){
 
 function paddleHit(player){
 	let offset = getOffset(player.pos);
-	speedUpBall();
+	speedUpBall(player);
 	return (gs.ball.coordY + gs.ball.size) >= offset && gs.ball.coordY <= (offset + gs.paddle.height);
 }
 
