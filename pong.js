@@ -238,6 +238,11 @@ function drawScoreboard(){
 	ctx.fillText(gs.player1.score + " - " + gs.player2.score, gs.screen.width/2, gs.screen.padding - 7);
 }
 
+function resetScore(){
+	gs.player1.score = 0;
+	gs.player2.score = 0;
+}
+
 function getOffset(playerPos){
 	return gs.screen.padding + playerPos*(gs.screen.height - gs.screen.padding*2 - gs.paddle.height)/100;
 }
@@ -254,6 +259,7 @@ function resetGame(){
 	gs.gamePaused = true;
 	resetBall();
 	resetPaddles();
+	resetScore();
 }
 
 function displayPauseMessage(){
