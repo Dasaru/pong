@@ -1,5 +1,6 @@
 
 let gs = {
+	
 	gameStarted: false,
 	gamePaused: true,
 	lastTickTime: null,
@@ -252,7 +253,7 @@ function startGame(){
 }
 
 function stopGame(){
-	gs.gameStarted = true;
+	gs.gameStarted = false;
 }
 
 function pauseGame(){
