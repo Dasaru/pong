@@ -1,6 +1,6 @@
 
 let gs = {
-
+	gameStarted: false,
 	gamePaused: true,
 	lastTickTime: null,
 
@@ -103,7 +103,7 @@ addEventListener("keyup", (e) => {
 addEventListener("keypress", (e) => {
 	if (e.code === "Enter") {
 		if (gs.gamePaused){
-			startGame();
+			unpauseGame();
 		} else {
 			pauseGame();
 		}
@@ -248,11 +248,19 @@ function getOffset(playerPos){
 }
 
 function startGame(){
-	gs.gamePaused = false;
+	gs.gameStarted = true;
+}
+
+function stopGame(){
+	gs.gameStarted = true;
 }
 
 function pauseGame(){
 	gs.gamePaused = true;
+}
+
+function unpauseGame(){
+	gs.gamePaused = false;
 }
 
 function resetGame(){
