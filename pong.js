@@ -11,6 +11,45 @@ let gs = {
 		height: 400
 	},
 
+	menu: {
+		itemSelectedIndex: 0,
+		items: [
+			{
+				name: "New Game",
+				visible: true,
+				select: function(){
+					console.log("New Game selected");
+				}
+			},
+			{
+				name: "Continue",
+				visible: true,
+				select: function(){
+					console.log("Continue selected");
+				}
+			},
+			{
+				name: "Reset",
+				visible: true,
+				select: function(){
+					console.log("Reset Game selected");
+				}
+			}
+		],
+		showMenu: function(){
+			ctx.fillStyle = "#aaa"
+			ctx.font = "24px Arial";
+			ctx.textAlign = "left";
+			let items = gs.menu.items.filter((item)=>{
+				return item.visible;
+			});
+			for (let i=0; i < items.length; i++){
+				ctx.fillText(items[i].name, gs.screen.width/2-50, gs.screen.height*0.6+i*26);
+			}
+			ctx.fillText(">", gs.screen.width/2-70, gs.screen.height*0.6 + gs.menu.itemSelectedIndex*26);
+		}
+	},
+
 	ball: {
 		size: 10,
 		coordX: 0,
@@ -142,6 +181,7 @@ window.requestAnimationFrame(playAnimation);
 
 		if (gs.gamePaused){
 			displayPauseMessage();
+			displayMainMenu();
 		}
 	}
 	gs.lastTickTime = time;
@@ -257,6 +297,7 @@ function stopGame(){
 }
 
 function pauseGame(){
+	gs.menu.itemSelectedIndex = 0;
 	gs.gamePaused = true;
 }
 
@@ -276,6 +317,10 @@ function displayPauseMessage(){
 	ctx.textAlign = "center";
 	ctx.font = "24px Arial";
 	ctx.fillText("Paused", gs.screen.width/2, gs.screen.height*0.4);
+}
+
+function displayMainMenu(){
+	gs.menu.showMenu();
 }
 
 function movePaddle(player, delta){
