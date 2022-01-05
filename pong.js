@@ -330,12 +330,13 @@ function movePaddle(player, delta){
 	if (!player.keyPressed.down && player.keyPressed.up) {
 		player.pos = player.pos - (delta/gs.paddle.speed);
 	}
-	if (player.pos < 0 ){
-		player.pos = 0;
-	}
-	if (player.pos > 100){
-		player.pos = 100;
-	}
+	player.pos = keepInBoundary(player.pos, 0, 100);
+}
+
+function keepInBoundary(val, min, max){
+	if (val < min) val = min;
+	if (val > max) val = max;
+	return val;
 }
 
 function playerScore(player){
