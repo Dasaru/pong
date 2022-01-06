@@ -31,6 +31,13 @@ let gs = {
 				}
 			},
 			{
+				name: "Options",
+				visible: true,
+				select: function(){
+					console.log("Options selected");
+				}
+			},
+			{
 				name: "Reset",
 				visible: true,
 				select: function(){
