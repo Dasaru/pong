@@ -180,7 +180,7 @@ window.requestAnimationFrame(playAnimation);
 		drawScoreboard();
 
 		if (gs.gamePaused){
-			displayPauseMessage();
+			displayMainMessage("Paused");
 			displayMainMenu();
 		}
 	}
@@ -312,11 +312,11 @@ function resetGame(){
 	resetScore();
 }
 
-function displayPauseMessage(){
+function displayMainMessage(message){
 	ctx.fillStyle = "#aaa"
 	ctx.textAlign = "center";
 	ctx.font = "24px Arial";
-	ctx.fillText("Paused", gs.screen.width/2, gs.screen.height*0.4);
+	ctx.fillText(message, gs.screen.width/2, gs.screen.height*0.4);
 }
 
 function displayMainMenu(){
