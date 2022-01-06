@@ -3,6 +3,8 @@ let gs = {
 	
 	gameStarted: false,
 	gamePaused: true,
+	gameWinner: null,
+	scoreToWin: 3,
 	lastTickTime: null,
 
 	screen: {
@@ -175,12 +177,15 @@ window.requestAnimationFrame(playAnimation);
 		clearScreen();
 		drawPaddles();
 		drawBall();
-
 		drawBorders();
 		drawScoreboard();
 
 		if (gs.gamePaused){
-			displayMainMessage("Paused");
+			if (gs.gameWinner){
+				displayMainMessage(gs.gameWinner + " wins!");
+			} else {
+				displayMainMessage("Paused");
+			}
 			displayMainMenu();
 		}
 	}
@@ -344,6 +349,19 @@ function playerScore(player){
 	resetPaddles();
 	pauseGame();
 	player.score++;
+	checkPlayerVictory();
+}
+
+function checkPlayerVictory(){
+	if (gs.player1.score >= gs.scoreToWin){
+		gs.gameWinner = "Player 1";
+		resetGame();
+	} else if (gs.player2.score >= gs.scoreToWin){
+		gs.gameWinner = "Player 2";
+		resetGame();
+	} else {
+		gs.gameWinner = null;
+	}
 }
 
 function paddleHit(player){
