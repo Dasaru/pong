@@ -148,9 +148,7 @@ addEventListener("keydown", (e) => {
 	}
 	// Main menu selection
 	if (gs.gamePaused){
-		let visibleItems = gs.menu.items.filter((item)=>{
-			return item.visible;
-		});
+		const visibleItems = gs.menu.getVisibleItems();
 		if (e.code === gs.player2.keyCode.down){
 			gs.menu.itemSelectedIndex++;
 		} else if (e.code === gs.player2.keyCode.up) {
