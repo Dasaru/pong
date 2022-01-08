@@ -130,6 +130,18 @@ addEventListener("keydown", (e) => {
 	if (e.code === gs.player2.keyCode.down){
 		gs.player2.keyPressed.down = true;
 	}
+	// Main menu selection
+	if (gs.gamePaused){
+		let visibleItems = gs.menu.items.filter((item)=>{
+			return item.visible;
+		});
+		if (e.code === gs.player2.keyCode.down){
+			gs.menu.itemSelectedIndex++;
+		} else if (e.code === gs.player2.keyCode.up) {
+			gs.menu.itemSelectedIndex--;
+		}
+		gs.menu.itemSelectedIndex = keepInBoundary(gs.menu.itemSelectedIndex, 0, visibleItems.length-1);
+	}
 });
 
 addEventListener("keyup", (e) => {
