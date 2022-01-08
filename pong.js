@@ -116,19 +116,27 @@ let gs = {
 };
 
 addEventListener("keydown", (e) => {
-	//Player 1
+	// Player 1
 	if (e.code === gs.player1.keyCode.up){
 		gs.player1.keyPressed.up = true;
 	}
 	if (e.code === gs.player1.keyCode.down){
 		gs.player1.keyPressed.down = true;
 	}
-	//Player 2
+	// Player 2
 	if (e.code === gs.player2.keyCode.up){
 		gs.player2.keyPressed.up = true;
 	}
 	if (e.code === gs.player2.keyCode.down){
 		gs.player2.keyPressed.down = true;
+	}
+	// Pause menu
+	if (e.code === "Enter") {
+		if (gs.gamePaused){
+			unpauseGame();
+		} else {
+			pauseGame();
+		}
 	}
 	// Main menu selection
 	if (gs.gamePaused){
@@ -145,29 +153,19 @@ addEventListener("keydown", (e) => {
 });
 
 addEventListener("keyup", (e) => {
-	//Player 1
+	// Player 1
 	if (e.code === gs.player1.keyCode.up){
 		gs.player1.keyPressed.up = false;
 	}
 	if (e.code === gs.player1.keyCode.down){
 		gs.player1.keyPressed.down = false;
 	}
-	//Player 2
+	// Player 2
 	if (e.code === gs.player2.keyCode.up){
 		gs.player2.keyPressed.up = false;
 	}
 	if (e.code === gs.player2.keyCode.down){
 		gs.player2.keyPressed.down = false;
-	}
-});
-
-addEventListener("keypress", (e) => {
-	if (e.code === "Enter") {
-		if (gs.gamePaused){
-			unpauseGame();
-		} else {
-			pauseGame();
-		}
 	}
 });
 
