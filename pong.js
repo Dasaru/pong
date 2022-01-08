@@ -18,7 +18,7 @@ let gs = {
 		items: [
 			{
 				name: "New Game",
-				visible: true,
+				visible: false,
 				select: function(){
 					console.log("New Game selected");
 				}
@@ -28,6 +28,7 @@ let gs = {
 				visible: true,
 				select: function(){
 					console.log("Continue selected");
+					unpauseGame();
 				}
 			},
 			{
@@ -45,17 +46,24 @@ let gs = {
 				}
 			}
 		],
+		getVisibleItems: function() {
+			return gs.menu.items.filter((item)=>{
+				return item.visible;
+			});
+		},
 		showMenu: function(){
 			ctx.fillStyle = "#aaa"
 			ctx.font = "24px Arial";
 			ctx.textAlign = "left";
-			let items = gs.menu.items.filter((item)=>{
-				return item.visible;
-			});
+			const items = gs.menu.getVisibleItems();
 			for (let i=0; i < items.length; i++){
 				ctx.fillText(items[i].name, gs.screen.width/2-50, gs.screen.height*0.6+i*26);
 			}
 			ctx.fillText(">", gs.screen.width/2-70, gs.screen.height*0.6 + gs.menu.itemSelectedIndex*26);
+		},
+		callSelectedMenuItem: function(){
+			const visibleItems = gs.menu.getVisibleItems();
+			visibleItems[gs.menu.itemSelectedIndex].select();
 		}
 	},
 
@@ -133,7 +141,7 @@ addEventListener("keydown", (e) => {
 	// Pause menu
 	if (e.code === "Enter") {
 		if (gs.gamePaused){
-			unpauseGame();
+			gs.menu.callSelectedMenuItem();
 		} else {
 			pauseGame();
 		}
