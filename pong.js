@@ -71,7 +71,7 @@ let gs = {
 		size: 10,
 		coordX: 0,
 		coordY: 0,
-		velX: 0, // (-1 to 1) ratio: 1 = rate of 1% per 10 milliseconds
+		velX: 0,
 		velY: 0,
 		minXSpeed: 1.2,
 		maxXSpeed: 5,
