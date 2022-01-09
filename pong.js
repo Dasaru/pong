@@ -21,6 +21,9 @@ let gs = {
 				visible: false,
 				select: function(){
 					console.log("New Game selected");
+					unpauseGame();
+					gs.menu.setItemVisibility("New Game", false);
+					gs.menu.setItemVisibility("Continue", true);
 				}
 			},
 			{
@@ -351,6 +354,8 @@ function resetGame(){
 	resetBall();
 	resetPaddles();
 	resetScore();
+	gs.menu.setItemVisibility("New Game", true);
+	gs.menu.setItemVisibility("Continue", false);
 }
 
 function displayMainMessage(message){
