@@ -24,6 +24,7 @@ let gs = {
 					unpauseGame();
 					gs.menu.setItemVisibility("New Game", false);
 					gs.menu.setItemVisibility("Continue", true);
+					gs.menu.setItemVisibility("Reset", true);
 				}
 			},
 			{
@@ -41,7 +42,7 @@ let gs = {
 			},
 			{
 				name: "Reset",
-				visible: true,
+				visible: false,
 				select: function(){
 					resetGame();
 				}
@@ -360,6 +361,7 @@ function resetGame(){
 	resetScore();
 	gs.menu.setItemVisibility("New Game", true);
 	gs.menu.setItemVisibility("Continue", false);
+	gs.menu.setItemVisibility("Reset", false);
 }
 
 function displayMainMessage(message, styles){
