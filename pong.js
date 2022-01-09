@@ -43,6 +43,7 @@ let gs = {
 				visible: true,
 				select: function(){
 					console.log("Reset Game selected");
+					resetGame();
 				}
 			}
 		],
