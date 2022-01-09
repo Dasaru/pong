@@ -22,6 +22,7 @@ let gs = {
 				select: function(){
 					startGame();
 					unpauseGame();
+					gs.gameWinner = null;
 					gs.menu.setItemVisibility("New Game", false);
 					gs.menu.setItemVisibility("Continue", true);
 					gs.menu.setItemVisibility("Reset", true);
