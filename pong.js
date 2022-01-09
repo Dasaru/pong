@@ -214,10 +214,10 @@ window.requestAnimationFrame(playAnimation);
 
 		clearScreen();
 		drawPaddles();
-		drawBall();
 		drawBorders();
 
 		if (gs.gameStarted){
+			drawBall();
 			drawScoreboard();
 		}
 
