@@ -20,6 +20,7 @@ let gs = {
 				name: "New Game",
 				visible: true,
 				select: function(){
+					startGame();
 					unpauseGame();
 					gs.menu.setItemVisibility("New Game", false);
 					gs.menu.setItemVisibility("Continue", true);
@@ -218,8 +219,14 @@ window.requestAnimationFrame(playAnimation);
 		if (gs.gamePaused){
 			if (gs.gameWinner){
 				displayMainMessage(gs.gameWinner + " wins!");
+			} else if (!gs.gameStarted){
+				const style = {
+					fillStyle: "#77a",
+					font: "bold 36px Arial"
+				}
+				displayMainMessage("PONG", style);
 			} else {
-				displayMainMessage("Paused");
+				displayMainMessage("Paused", {fillStyle: "#7a7"});
 			}
 			displayMainMenu();
 		}
@@ -355,10 +362,10 @@ function resetGame(){
 	gs.menu.setItemVisibility("Continue", false);
 }
 
-function displayMainMessage(message){
-	ctx.fillStyle = "#aaa"
-	ctx.textAlign = "center";
-	ctx.font = "24px Arial";
+function displayMainMessage(message, styles){
+	ctx.fillStyle = styles?.fillStyle ?? "#aaa";
+	ctx.textAlign = styles?.textAlign ?? "center";
+	ctx.font = styles?.font ?? "24px Arial";
 	ctx.fillText(message, gs.screen.width/2, gs.screen.height*0.4);
 }
 
