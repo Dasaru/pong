@@ -18,7 +18,7 @@ let gs = {
 		items: [
 			{
 				name: "New Game",
-				visible: false,
+				visible: true,
 				select: function(){
 					console.log("New Game selected");
 					unpauseGame();
@@ -28,7 +28,7 @@ let gs = {
 			},
 			{
 				name: "Continue",
-				visible: true,
+				visible: false,
 				select: function(){
 					console.log("Continue selected");
 					unpauseGame();
@@ -356,6 +356,7 @@ function resetGame(){
 	resetScore();
 	gs.menu.setItemVisibility("New Game", true);
 	gs.menu.setItemVisibility("Continue", false);
+	gs.menu.itemSelectedIndex = 0;
 }
 
 function displayMainMessage(message){
