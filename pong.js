@@ -47,6 +47,18 @@ let gs = {
 				}
 			}
 		],
+		setItemVisibility: function(itemName, value){
+			if (typeof value !== "boolean") {
+				throw new TypeError("function setItemVisibility: Expected boolean value for second argument.");
+			};
+			for (let i=0; i < gs.menu.items.length; i++){
+				if (gs.menu.items[i].name === itemName){
+					gs.menu.items[i].visible = value;
+					return true;
+				}
+			}
+			throw new TypeError("function setItemVisibility: Invalid menu item for first argument.");
+		},
 		getVisibleItems: function() {
 			return gs.menu.items.filter((item)=>{
 				return item.visible;
