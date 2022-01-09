@@ -216,7 +216,10 @@ window.requestAnimationFrame(playAnimation);
 		drawPaddles();
 		drawBall();
 		drawBorders();
-		drawScoreboard();
+
+		if (gs.gameStarted){
+			drawScoreboard();
+		}
 
 		if (gs.gamePaused){
 			if (gs.gameWinner){
