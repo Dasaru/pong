@@ -346,13 +346,13 @@ function unpauseGame(){
 }
 
 function resetGame(){
-	gs.gamePaused = true;
+	pauseGame();
+	stopGame();
 	resetBall();
 	resetPaddles();
 	resetScore();
 	gs.menu.setItemVisibility("New Game", true);
 	gs.menu.setItemVisibility("Continue", false);
-	gs.menu.itemSelectedIndex = 0;
 }
 
 function displayMainMessage(message){
