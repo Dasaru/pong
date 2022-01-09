@@ -20,7 +20,6 @@ let gs = {
 				name: "New Game",
 				visible: true,
 				select: function(){
-					console.log("New Game selected");
 					unpauseGame();
 					gs.menu.setItemVisibility("New Game", false);
 					gs.menu.setItemVisibility("Continue", true);
@@ -30,7 +29,6 @@ let gs = {
 				name: "Continue",
 				visible: false,
 				select: function(){
-					console.log("Continue selected");
 					unpauseGame();
 				}
 			},
@@ -38,14 +36,12 @@ let gs = {
 				name: "Options",
 				visible: true,
 				select: function(){
-					console.log("Options selected");
 				}
 			},
 			{
 				name: "Reset",
 				visible: true,
 				select: function(){
-					console.log("Reset Game selected");
 					resetGame();
 				}
 			}
