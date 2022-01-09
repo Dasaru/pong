@@ -220,7 +220,7 @@ window.requestAnimationFrame(playAnimation);
 
 		if (gs.gamePaused){
 			if (gs.gameWinner){
-				displayMainMessage(gs.gameWinner + " wins!");
+				displayMainMessage(gs.gameWinner + " wins!", {fillStyle: "#a77"});
 			} else if (!gs.gameStarted){
 				const style = {
 					fillStyle: "#77a",
