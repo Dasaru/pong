@@ -414,7 +414,7 @@ function keepInBoundary(val, min, max){
 function playerScore(player){
 	resetBall();
 	resetPaddles();
-	pauseGame();
+	setCountdown(2);
 	player.score++;
 	checkPlayerVictory();
 }
