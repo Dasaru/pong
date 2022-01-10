@@ -6,6 +6,7 @@ let gs = {
 	gameWinner: null,
 	scoreToWin: 3,
 	lastTickTime: null,
+	countdownTimestamp: Date.now(),
 
 	screen: {
 		padding: 30,
@@ -206,13 +207,19 @@ window.requestAnimationFrame(playAnimation);
 	if (gs.lastTickTime != null){
 		let delta = time - gs.lastTickTime;
 
+		clearScreen();
+
 		if (!gs.gamePaused){
-			movePaddle(gs.player1, delta);
-			movePaddle(gs.player2, delta);
-			moveBall(delta);
+			const timeLeft = remainingCountdown();
+			if (timeLeft > 0) {
+				displayMainMessage(Math.ceil(timeLeft/1000));
+			} else {
+				movePaddle(gs.player1, delta);
+				movePaddle(gs.player2, delta);
+				moveBall(delta);
+			}
 		}
 
-		clearScreen();
 		drawPaddles();
 		drawBorders();
 
@@ -238,6 +245,14 @@ window.requestAnimationFrame(playAnimation);
 	}
 	gs.lastTickTime = time;
 	window.requestAnimationFrame(playAnimation);
+}
+
+function setCountdown(seconds) {
+	gs.countdownTimestamp = Date.now() + (seconds*1000);
+}
+
+function remainingCountdown(){
+	return gs.countdownTimestamp - Date.now();
 }
 
 function clearScreen(){
@@ -355,6 +370,7 @@ function pauseGame(){
 
 function unpauseGame(){
 	gs.gamePaused = false;
+	setCountdown(3);
 }
 
 function resetGame(){
