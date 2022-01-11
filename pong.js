@@ -393,6 +393,14 @@ function displayMainMessage(message, styles){
 
 function displayMainMenu(){
 	gs.menu.showMenu();
+	displayMainMenuControls();
+}
+
+function displayMainMenuControls(){
+	ctx.fillStyle = "#777";
+	ctx.textAlign = "center";
+	ctx.font = "18px Arial";
+	ctx.fillText("menu select: ↑, ↓, [Enter]", gs.screen.width/2, gs.screen.height-8);
 }
 
 function movePaddle(player, delta){
