@@ -393,14 +393,14 @@ function displayMainMessage(message, styles){
 
 function displayMainMenu(){
 	gs.menu.showMenu();
-	displayMainMenuControls();
+	displayBottomGutterMessage("menu select: ↑, ↓, [Enter]");
 }
 
-function displayMainMenuControls(){
-	ctx.fillStyle = "#777";
-	ctx.textAlign = "center";
-	ctx.font = "18px Arial";
-	ctx.fillText("menu select: ↑, ↓, [Enter]", gs.screen.width/2, gs.screen.height-8);
+function displayBottomGutterMessage(message, styles){
+	ctx.fillStyle = styles?.fillStyle ?? "#777";
+	ctx.textAlign = styles?.textAlign ?? "center";
+	ctx.font = styles?.font ?? "18px Arial";
+	ctx.fillText(message, gs.screen.width/2, gs.screen.height-8);
 }
 
 function movePaddle(player, delta){
