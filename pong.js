@@ -222,6 +222,7 @@ window.requestAnimationFrame(playAnimation);
 
 		drawPaddles();
 		drawBorders();
+		displayTopLeftMessage("To Win: " + gs.scoreToWin);
 
 		if (gs.gameStarted){
 			drawBall();
@@ -394,6 +395,13 @@ function displayMainMessage(message, styles){
 function displayMainMenu(){
 	gs.menu.showMenu();
 	displayBottomGutterMessage("menu select: ↑, ↓, [Enter]");
+}
+
+function displayTopLeftMessage(message, styles){
+	ctx.fillStyle = styles?.fillStyle ?? "#777";
+	ctx.textAlign = styles?.textAlign ?? "left";
+	ctx.font = styles?.font ?? "18px Arial";
+	ctx.fillText(message, 8, 20);
 }
 
 function displayBottomGutterMessage(message, styles){
