@@ -24,9 +24,7 @@ let gs = {
 					startGame();
 					unpauseGame();
 					gs.gameWinner = null;
-					gs.menu.setItemVisibility("New Game", false);
-					gs.menu.setItemVisibility("Continue", true);
-					gs.menu.setItemVisibility("Reset", true);
+					gs.menu.setVisibleItems(["Continue", "Options", "Reset"]);
 				}
 			},
 			{
@@ -50,17 +48,10 @@ let gs = {
 				}
 			}
 		],
-		setItemVisibility: function(itemName, value){
-			if (typeof value !== "boolean") {
-				throw new TypeError("function setItemVisibility: Expected boolean value for second argument.");
-			};
-			for (let i=0; i < gs.menu.items.length; i++){
-				if (gs.menu.items[i].name === itemName){
-					gs.menu.items[i].visible = value;
-					return true;
-				}
+		setVisibleItems: function(itemList){
+			for (let j=0; j < gs.menu.items.length; j++){
+				gs.menu.items[j].visible = itemList.includes(gs.menu.items[j].name);
 			}
-			throw new TypeError("function setItemVisibility: Invalid menu item for first argument.");
 		},
 		getVisibleItems: function() {
 			return gs.menu.items.filter((item)=>{
@@ -380,9 +371,7 @@ function resetGame(){
 	resetBall();
 	resetPaddles();
 	resetScore();
-	gs.menu.setItemVisibility("New Game", true);
-	gs.menu.setItemVisibility("Continue", false);
-	gs.menu.setItemVisibility("Reset", false);
+	gs.menu.setVisibleItems(["New Game", "Options"]);
 }
 
 function displayMainMessage(message, styles){
