@@ -38,6 +38,8 @@ let gs = {
 				name: "Options",
 				visible: true,
 				select: function(){
+					gs.menu.itemSelectedIndex = 0;
+					gs.menu.setVisibleItems(["Back", "Points to Win", "Delay", "Paddle Speed", "Ball Speed"]);
 				}
 			},
 			{
@@ -46,6 +48,38 @@ let gs = {
 				select: function(){
 					resetGame();
 				}
+			},
+			{
+				name: "Back",
+				visible: false,
+				select: function(){
+					gs.menu.itemSelectedIndex = 0;
+					if (gs.gameStarted){
+						gs.menu.setVisibleItems(["Continue", "Options", "Reset"]);
+					} else {
+						gs.menu.setVisibleItems(["New Game", "Options"]);
+					}
+				}
+			},
+			{
+				name: "Points to Win",
+				visible: false,
+				select: function(){}
+			},
+			{
+				name: "Paddle Speed",
+				visible: false,
+				select: function(){}
+			},
+			{
+				name: "Ball Speed",
+				visible: false,
+				select: function(){}
+			},
+			{
+				name: "Delay",
+				visible: false,
+				select: function(){}
 			}
 		],
 		setVisibleItems: function(itemList){
