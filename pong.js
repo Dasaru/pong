@@ -93,11 +93,11 @@ let gs = {
 			});
 		},
 		showMenu: function(){
-			ctx.fillStyle = "#aaa"
-			ctx.font = "24px Arial";
-			ctx.textAlign = "left";
 			const items = gs.menu.getVisibleItems();
 			for (let i=0; i < items.length; i++){
+				ctx.fillStyle = items[i]?.style?.fillStyle ?? "#aaa";
+				ctx.font = items[i]?.style?.font ?? "24px Arial";
+				ctx.textAlign = items[i]?.style?.textAlign ?? "left";
 				ctx.fillText(items[i].name, gs.screen.width/2-50, gs.screen.height*0.6+i*26);
 			}
 			ctx.fillText(">", gs.screen.width/2-70, gs.screen.height*0.6 + gs.menu.itemSelectedIndex*26);
