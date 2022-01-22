@@ -83,9 +83,14 @@ let gs = {
 			}
 		],
 		setVisibleItems: function(itemList){
+			/*
 			for (let j=0; j < gs.menu.items.length; j++){
 				gs.menu.items[j].visible = itemList.includes(gs.menu.items[j].name);
 			}
+			*/
+			gs.menu.items.forEach((elem) => {
+				elem.visible = itemList.includes(elem.name);
+			});
 		},
 		getVisibleItems: function() {
 			return gs.menu.items.filter((item)=>{
