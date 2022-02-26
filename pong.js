@@ -43,7 +43,7 @@ let gs = {
 				visible: true,
 				select: function(){
 					gs.menu.itemSelectedIndex = 0;
-					gs.menu.setVisibleItems(["Back", "Points to Win", "Start Delay", "Game Speed"]);
+					gs.menu.setVisibleItems(["Back", "Points to Win", "Game Speed", "Countdown"]);
 				}
 			},
 			{
@@ -101,7 +101,7 @@ let gs = {
 				}
 			},
 			{
-				name: "Start Delay",
+				name: "Countdown",
 				visible: false,
 				text: " 1  2 (3) sec",
 				select: function(){
