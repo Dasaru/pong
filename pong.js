@@ -5,6 +5,8 @@ let gs = {
 	gamePaused: true,
 	gameWinner: null,
 	scoreToWin: 3,
+	startDelay: 3,
+	gameSpeed: "normal",
 	lastTickTime: null,
 	countdownTimestamp: Date.now(),
 
@@ -16,6 +18,7 @@ let gs = {
 
 	menu: {
 		itemSelectedIndex: 0,
+		subMenuText: "",
 		items: [
 			{
 				name: "New Game",
@@ -23,8 +26,9 @@ let gs = {
 				select: function(){
 					startGame();
 					unpauseGame();
+					resetBall();
 					gs.gameWinner = null;
-					gs.menu.setVisibleItems(["Continue", "Options", "Reset"]);
+					gs.menu.setVisibleItems(["Continue", "Reset"]);
 				}
 			},
 			{
@@ -39,7 +43,7 @@ let gs = {
 				visible: true,
 				select: function(){
 					gs.menu.itemSelectedIndex = 0;
-					gs.menu.setVisibleItems(["Back", "Points to Win", "Delay", "Paddle Speed", "Ball Speed"]);
+					gs.menu.setVisibleItems(["Back", "Points to Win", "Start Delay", "Game Speed"]);
 				}
 			},
 			{
@@ -55,7 +59,7 @@ let gs = {
 				select: function(){
 					gs.menu.itemSelectedIndex = 0;
 					if (gs.gameStarted){
-						gs.menu.setVisibleItems(["Continue", "Options", "Reset"]);
+						gs.menu.setVisibleItems(["Continue", "Reset"]);
 					} else {
 						gs.menu.setVisibleItems(["New Game", "Options"]);
 					}
@@ -64,22 +68,55 @@ let gs = {
 			{
 				name: "Points to Win",
 				visible: false,
-				select: function(){}
+				text: "(3) 5  7 ",
+				select: function(){
+					const visibleItems = gs.menu.getVisibleItems();
+					if (gs.scoreToWin === 3){
+						gs.scoreToWin = 5;
+						visibleItems[gs.menu.itemSelectedIndex].text = " 3 (5) 7 ";
+					} else if (gs.scoreToWin === 5) {
+						gs.scoreToWin = 7;
+						visibleItems[gs.menu.itemSelectedIndex].text = " 3  5 (7)";
+					} else {
+						gs.scoreToWin = 3;
+						visibleItems[gs.menu.itemSelectedIndex].text = "(3) 5  7 ";
+					}
+				}
 			},
 			{
-				name: "Paddle Speed",
+				name: "Game Speed",
 				visible: false,
-				select: function(){}
+				text: "(Normal) Fast ",
+				select: function(){
+					const visibleItems = gs.menu.getVisibleItems();
+					if (gs.gameSpeed === "normal"){
+						gs.gameSpeed = "fast";
+						resetBallSpeed();
+						visibleItems[gs.menu.itemSelectedIndex].text = " Normal (Fast)";
+					} else if (gs.gameSpeed === "fast") {
+						gs.gameSpeed = "normal";
+						resetBallSpeed();
+						visibleItems[gs.menu.itemSelectedIndex].text = "(Normal) Fast ";
+					}
+				}
 			},
 			{
-				name: "Ball Speed",
+				name: "Start Delay",
 				visible: false,
-				select: function(){}
-			},
-			{
-				name: "Delay",
-				visible: false,
-				select: function(){}
+				text: " 1  2 (3) sec",
+				select: function(){
+					const visibleItems = gs.menu.getVisibleItems();
+					if (gs.startDelay === 1){
+						gs.startDelay = 2;
+						visibleItems[gs.menu.itemSelectedIndex].text = " 1 (2) 3  sec";
+					} else if (gs.startDelay === 2) {
+						gs.startDelay = 3;
+						visibleItems[gs.menu.itemSelectedIndex].text = " 1  2 (3) sec";
+					} else {
+						gs.startDelay = 1;
+						visibleItems[gs.menu.itemSelectedIndex].text = "(1) 2  3  sec";
+					}
+				}
 			}
 		],
 		setVisibleItems: function(itemList){
@@ -102,6 +139,10 @@ let gs = {
 			}
 			ctx.fillText(">", gs.screen.width/2-70, gs.screen.height*0.6 + gs.menu.itemSelectedIndex*26);
 		},
+		updateSubMenuText: function(){
+			const visibleItems = gs.menu.getVisibleItems();
+			gs.menu.subMenuText = visibleItems[gs.menu.itemSelectedIndex].text ?? "";
+		},
 		callSelectedMenuItem: function(){
 			const visibleItems = gs.menu.getVisibleItems();
 			visibleItems[gs.menu.itemSelectedIndex].select();
@@ -114,6 +155,7 @@ let gs = {
 		coordY: 0,
 		velX: 0,
 		velY: 0,
+		accelX: 0.4,
 		minXSpeed: 1.2,
 		maxXSpeed: 5,
 		minYSpeed: 0.6,
@@ -124,6 +166,33 @@ let gs = {
 		width: 10,
 		height: 81,
 		speed: 8 // # of milliseconds to move 1%
+	},
+
+	gameSpeedSettings: {
+		normal: {
+			ball: {
+				accelX: 0.4,
+				minXSpeed: 1.2,
+				maxXSpeed: 5,
+				minYSpeed: 0.6,
+				maxYSpeed: 5
+			},
+			paddle: {
+				speed: 8
+			}
+		},
+		fast: {
+			ball: {
+				accelX: 0.8,
+				minXSpeed: 3.6,
+				maxXSpeed: 10,
+				minYSpeed: 1.2,
+				maxYSpeed: 10
+			},
+			paddle: {
+				speed: 4
+			}
+		}
 	},
 
 	player1: {
@@ -196,6 +265,7 @@ addEventListener("keydown", (e) => {
 			gs.menu.itemSelectedIndex--;
 		}
 		gs.menu.itemSelectedIndex = keepInBoundary(gs.menu.itemSelectedIndex, 0, visibleItems.length-1);
+		gs.menu.updateSubMenuText();
 	}
 });
 
@@ -263,6 +333,7 @@ window.requestAnimationFrame(playAnimation);
 					font: "bold 36px Arial"
 				}
 				displayMainMessage("PONG", style);
+				displaySubMessage(gs.menu.subMenuText);
 			} else {
 				displayMainMessage("Paused", {fillStyle: "#7a7"});
 			}
@@ -299,8 +370,8 @@ function resetBall(){
 }
 
 function resetBallSpeed(){
-	gs.ball.velX = gs.ball.minXSpeed;
-	gs.ball.velY = gs.ball.minYSpeed;
+	Object.assign(gs.ball, gs.gameSpeedSettings[gs.gameSpeed].ball);
+	Object.assign(gs.paddle, gs.gameSpeedSettings[gs.gameSpeed].paddle);
 }
 
 function randomizeBallDirection(){
@@ -314,10 +385,10 @@ function speedUpBall(playerHit){
 	// Increase ball.velX speed
 	const absX = Math.abs(gs.ball.velX);
 	const signX = (gs.ball.velX > 0) ? 1 : -1;
-	if (absX === gs.ball.minXSpeed){
-		gs.ball.velX = signX * 1.8;
+	if (absX === gs.ball.maxXSpeed) {
+		gs.ball.velX = signX * (absX + gs.ball.accelX + 1.8); // Initial boost
 	} else if (absX < gs.ball.maxXSpeed){
-		gs.ball.velX = signX * (absX + 0.4);
+		gs.ball.velX = signX * (absX + gs.ball.accelX);
 	}
 
 	// Change velY direction based on paddle movement and collision.
@@ -396,7 +467,7 @@ function pauseGame(){
 
 function unpauseGame(){
 	gs.gamePaused = false;
-	setCountdown(3);
+	setCountdown(gs.startDelay);
 }
 
 function resetGame(){
@@ -413,6 +484,14 @@ function displayMainMessage(message, styles){
 	ctx.textAlign = styles?.textAlign ?? "center";
 	ctx.font = styles?.font ?? "24px Arial";
 	ctx.fillText(message, gs.screen.width/2, gs.screen.height*0.4);
+}
+
+function displaySubMessage(message, styles){
+	if (!message) return;
+	ctx.fillStyle = styles?.fillStyle ?? "#FFE800";
+	ctx.textAlign = styles?.textAlign ?? "center";
+	ctx.font = styles?.font ?? "18px Arial";
+	ctx.fillText(message, gs.screen.width/2, gs.screen.height*0.5);
 }
 
 function displayMainMenu(){
@@ -453,7 +532,7 @@ function keepInBoundary(val, min, max){
 function playerScore(player){
 	resetBall();
 	resetPaddles();
-	setCountdown(2);
+	setCountdown(gs.startDelay);
 	player.score++;
 	checkPlayerVictory();
 }
