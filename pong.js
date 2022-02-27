@@ -333,7 +333,6 @@ window.requestAnimationFrame(playAnimation);
 					font: "bold 36px Arial"
 				}
 				displayMainMessage("PONG", style);
-				displaySubMessage(gs.menu.subMenuText);
 			} else {
 				displayMainMessage("Paused", {fillStyle: "#7a7"});
 			}
@@ -484,6 +483,7 @@ function displayMainMessage(message, styles){
 	ctx.textAlign = styles?.textAlign ?? "center";
 	ctx.font = styles?.font ?? "24px Arial";
 	ctx.fillText(message, gs.screen.width/2, gs.screen.height*0.4);
+	displaySubMessage(gs.menu.subMenuText);
 }
 
 function displaySubMessage(message, styles){
