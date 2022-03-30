@@ -295,7 +295,7 @@ resetBall();
 window.requestAnimationFrame(playAnimation);
 
 /**********************
- * FUNCTIONS
+ * GAME LOOP
  *********************/
 
  function playAnimation(time){
@@ -337,11 +337,16 @@ window.requestAnimationFrame(playAnimation);
 				displayMainMessage("Paused", {fillStyle: "#7a7"});
 			}
 			displayMainMenu();
+			displayPlayerControlsMessage();
 		}
 	}
 	gs.lastTickTime = time;
 	window.requestAnimationFrame(playAnimation);
 }
+
+/**********************
+ * FUNCTIONS
+ *********************/
 
 function setCountdown(seconds) {
 	gs.countdownTimestamp = Date.now() + (seconds*1000);
@@ -511,6 +516,16 @@ function displayBottomGutterMessage(message, styles){
 	ctx.textAlign = styles?.textAlign ?? "center";
 	ctx.font = styles?.font ?? "18px Arial";
 	ctx.fillText(message, gs.screen.width/2, gs.screen.height-8);
+}
+
+function displayPlayerControlsMessage(){
+	ctx.fillStyle = "#777";
+	ctx.textAlign = "center";
+	ctx.font = "18px Arial";
+	ctx.fillText("Player 1:", 80, gs.screen.height-100);
+	ctx.fillText("A/Z keys", 80, gs.screen.height-80);
+	ctx.fillText("Player 2:", gs.screen.width-80, gs.screen.height-100);
+	ctx.fillText("Up/Down keys", gs.screen.width-80, gs.screen.height-80);
 }
 
 function movePaddle(player, delta){
